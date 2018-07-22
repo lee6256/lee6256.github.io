@@ -21,19 +21,19 @@
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这">
+    <meta name="description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的J">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些Java集合类的总结">
 <meta property="og:url" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/index.html">
 <meta property="og:site_name" content="Leeleg">
-<meta property="og:description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。   主角们各自">
+<meta property="og:description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/02.png">
-<meta property="og:updated_time" content="2018-07-22T13:10:20.222Z">
+<meta property="og:updated_time" content="2018-07-22T13:31:30.847Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些Java集合类的总结">
-<meta name="twitter:description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。   主角们各自">
+<meta name="twitter:description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/01.png">
     
         <link rel="alternate" type="application/atom+xml" title="Leeleg" href="/atom.xml">
@@ -162,7 +162,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#写在开头的话"><span class="post-toc-number">1.</span> <span class="post-toc-text">写在开头的话</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主角们"><span class="post-toc-number">2.</span> <span class="post-toc-text">主角们</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#各自的归属"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">各自的归属</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#各自的个性"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">各自的个性</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组-链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。"><span class="post-toc-number"></span> <span class="post-toc-text">从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组+链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。  </span></a>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#写在开头的话"><span class="post-toc-number">1.</span> <span class="post-toc-text">写在开头的话</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#主角们"><span class="post-toc-number">2.</span> <span class="post-toc-text">主角们</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#各自的归属"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">各自的归属</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#各自的个性"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">各自的个性</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -184,12 +184,87 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h3 id="写在开头的话"><a href="#写在开头的话" class="headerlink" title="写在开头的话"></a>写在开头的话</h3><p>我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。  </p>
+            <style>
+table th:nth-of-type(1) {
+    width: 100px;
+}
+table th:nth-of-type(2) {
+    width: 100px;
+}
+table th:nth-of-type(3) {
+    width: 120px;
+}
+</style>
+
+<h3 id="写在开头的话"><a href="#写在开头的话" class="headerlink" title="写在开头的话"></a>写在开头的话</h3><p>我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。  </p>
 <h3 id="主角们"><a href="#主角们" class="headerlink" title="主角们"></a>主角们</h3><h4 id="各自的归属"><a href="#各自的归属" class="headerlink" title="各自的归属"></a>各自的归属</h4><hr>
 <p>首先，从接口中知道它们都有什么样的功能，以下是各种接口的简单介绍： </p>
 <p><strong>List：</strong> 定义了List系的数据操作<br><strong>Map：</strong> 定义了Map系的数据操作<br><strong>Serializable：</strong> 对象可序列化<br><strong>Cloneable：</strong> 对象可拷贝，重写clone方法必须实现此接口<br><strong>Collection：</strong> 其实这个接口也继承了Iterable接口，可以使用Iterator迭代元素。<br><strong>RandomAccess：</strong> 标志该集合类应当使用哪种遍历算法提高效率<br><img src="/2018/07/22/一些Java集合类的总结/01.png" alt=""><br><img src="/2018/07/22/一些Java集合类的总结/02.png" alt="">  </p>
-<h4 id="各自的个性"><a href="#各自的个性" class="headerlink" title="各自的个性"></a>各自的个性</h4><p><style><br>table th:nth-of-type(1) {<br>    width: 100px;<br>}<br>table th:nth-of-type(2) {<br>    width: 100px;<br>}<br>table th:nth-of-type(3) {<br>    width: 120px;<br>}<br></style><br>|    集合    | 线程安全性 |    内部数据结构   | 效率 | 备注<br>|:———-:|:———:|:—————:|:—:|:-:<br>| ArrayList  |   不安全  |        数组       | 访问快，插入、删除慢 | -<br>| LinkedList |   不安全  |     双向循环链表   | 修改、查找慢，插入、删除快 | -<br>|  HashMap   |   不安全  | 数组+单链表+红黑树 | 一般情况下增删改查都是高效率，内部结构变复杂后效率下降 | HashMap会根据需要改变内部数据结构<br>| LinkedHashMap | 不安全 | 数组+双向链表 | - | 可实现LRU算法<br>| HashTable | 安全 | 数组+单链表+红黑树 | 同HashMap | 同HashMap<br>| ConcurrentHashMap | 安全 | 数组+双向链表+红黑树 | 同HashMap | 同HashMap<br>| CopyOnWriteArrayList | 安全 | 数组 | 读操作效率高，写操作效率低 | 会有内存占用和数据一致性问题</p>
-<h2 id="从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组-链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。"><a href="#从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组-链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。" class="headerlink" title="从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组+链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。  "></a>从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组+链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。  </h2><p>接下来的就是充满挑战的源码之旅了</p>
+<h4 id="各自的个性"><a href="#各自的个性" class="headerlink" title="各自的个性"></a>各自的个性</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">集合</th>
+<th style="text-align:center">线程安全性</th>
+<th style="text-align:center">内部数据结构</th>
+<th style="text-align:center">效率</th>
+<th style="text-align:center">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ArrayList</td>
+<td style="text-align:center">不安全</td>
+<td style="text-align:center">数组</td>
+<td style="text-align:center">访问快，插入、删除慢</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">LinkedList</td>
+<td style="text-align:center">不安全</td>
+<td style="text-align:center">双向循环链表</td>
+<td style="text-align:center">修改、查找慢，插入、删除快</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">HashMap</td>
+<td style="text-align:center">不安全</td>
+<td style="text-align:center">数组+单链表+红黑树</td>
+<td style="text-align:center">一般情况下增删改查都是高效率，内部结构变复杂后效率下降</td>
+<td style="text-align:center">HashMap会根据需要改变内部数据结构</td>
+</tr>
+<tr>
+<td style="text-align:center">LinkedHashMap</td>
+<td style="text-align:center">不安全</td>
+<td style="text-align:center">数组+双向链表</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">可实现LRU算法</td>
+</tr>
+<tr>
+<td style="text-align:center">HashTable</td>
+<td style="text-align:center">安全</td>
+<td style="text-align:center">数组+单链表+红黑树</td>
+<td style="text-align:center">同HashMap</td>
+<td style="text-align:center">同HashMap</td>
+</tr>
+<tr>
+<td style="text-align:center">ConcurrentHashMap</td>
+<td style="text-align:center">安全</td>
+<td style="text-align:center">数组+双向链表+红黑树</td>
+<td style="text-align:center">同HashMap</td>
+<td style="text-align:center">同HashMap</td>
+</tr>
+<tr>
+<td style="text-align:center">CopyOnWriteArrayList</td>
+<td style="text-align:center">安全</td>
+<td style="text-align:center">数组</td>
+<td style="text-align:center">读操作效率高，写操作效率低</td>
+<td style="text-align:center">会有内存占用和数据一致性问题</td>
+</tr>
+</tbody>
+</table>
+<p>从上面的内部数据结构中可以发现一些问题，List系要么只有数组，要么只有链表；而Map都是数组+链表，甚至还有红黑树。其实，Map系是因为要解决相同元素冲突产生碰撞，而采用这种设计，也就是散列表。单向链表和双向链表的区别是，双向链表可以做到顺序存储。红黑树的引入是在JDK8之后添加的，目的是当Map系集合类的元素碰撞过多时，把过长的链表转换为红黑树以提高访问效率。  </p>
+<hr>
+<p>接下来的就是充满挑战的源码之旅了，希望自己能够坚持下去，然后当作日记去记录下来。</p>
 
         </div>
 
