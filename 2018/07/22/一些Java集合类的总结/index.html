@@ -21,19 +21,19 @@
     
     
     <meta name="keywords" content="">
-    <meta name="description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的J">
+    <meta name="description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些Java集合类的总结">
 <meta property="og:url" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/index.html">
 <meta property="og:site_name" content="Leeleg">
-<meta property="og:description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通">
+<meta property="og:description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。   主角们各自">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/02.png">
-<meta property="og:updated_time" content="2018-07-22T13:31:30.847Z">
+<meta property="og:updated_time" content="2018-08-02T15:20:44.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些Java集合类的总结">
-<meta name="twitter:description" content="table th:nth-of-type(1) {     width: 100px; } table th:nth-of-type(2) {     width: 100px; } table th:nth-of-type(3) {     width: 120px; }   写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通">
+<meta name="twitter:description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。   主角们各自">
 <meta name="twitter:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/01.png">
     
         <link rel="alternate" type="application/atom+xml" title="Leeleg" href="/atom.xml">
@@ -184,22 +184,11 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <style>
-table th:nth-of-type(1) {
-    width: 100px;
-}
-table th:nth-of-type(2) {
-    width: 100px;
-}
-table th:nth-of-type(3) {
-    width: 120px;
-}
-</style>
-
-<h3 id="写在开头的话"><a href="#写在开头的话" class="headerlink" title="写在开头的话"></a>写在开头的话</h3><p>我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。  </p>
+            <h3 id="写在开头的话"><a href="#写在开头的话" class="headerlink" title="写在开头的话"></a>写在开头的话</h3><p>我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。  </p>
 <h3 id="主角们"><a href="#主角们" class="headerlink" title="主角们"></a>主角们</h3><h4 id="各自的归属"><a href="#各自的归属" class="headerlink" title="各自的归属"></a>各自的归属</h4><hr>
 <p>首先，从接口中知道它们都有什么样的功能，以下是各种接口的简单介绍： </p>
-<p><strong>List：</strong> 定义了List系的数据操作<br><strong>Map：</strong> 定义了Map系的数据操作<br><strong>Serializable：</strong> 对象可序列化<br><strong>Cloneable：</strong> 对象可拷贝，重写clone方法必须实现此接口<br><strong>Collection：</strong> 其实这个接口也继承了Iterable接口，可以使用Iterator迭代元素。<br><strong>RandomAccess：</strong> 标志该集合类应当使用哪种遍历算法提高效率<br><img src="/2018/07/22/一些Java集合类的总结/01.png" alt=""><br><img src="/2018/07/22/一些Java集合类的总结/02.png" alt="">  </p>
+<p><strong>List：</strong> 定义了List系的数据操作<br><strong>Map：</strong> 定义了Map系的数据操作<br><strong>Serializable：</strong> 对象可序列化<br><strong>Cloneable：</strong> 对象可拷贝，重写clone方法必须实现此接口<br><strong>Collection：</strong> 其实这个接口也继承了Iterable接口，可以使用Iterator迭代元素。<br><strong>RandomAccess：</strong> 标志该集合类应当使用哪种遍历算法提高效率<br><img src="/2018/07/22/一些Java集合类的总结/01.png" alt=""><br><img src="/2018/07/22/一些Java集合类的总结/02.png" alt=""> </p>
+<p><style> table th:nth-of-type(1) { width: 100px; } table th:nth-of-type(2) { width: 90px; } table th:nth-of-type(3) { width: 120px; }<br></style></p>
 <h4 id="各自的个性"><a href="#各自的个性" class="headerlink" title="各自的个性"></a>各自的个性</h4><table>
 <thead>
 <tr>
@@ -336,7 +325,14 @@ table th:nth-of-type(3) {
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/02/ArrayList的实现原理/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">ArrayList的实现原理</h4>
+      </a>
+    </div>
   
 
   
