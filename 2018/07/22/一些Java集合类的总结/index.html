@@ -30,7 +30,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/01.png">
 <meta property="og:image" content="http://yoursite.com/2018/07/22/一些Java集合类的总结/02.png">
-<meta property="og:updated_time" content="2018-08-02T15:20:44.962Z">
+<meta property="og:updated_time" content="2018-11-10T12:24:13.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些Java集合类的总结">
 <meta name="twitter:description" content="写在开头的话我并不打算一开始就把所有的Java类都拉出来看一遍，毕竟常用的就那么几个，而且它们之间的一些实现原理是相通的，只是根据不同的情况做了改变。因此，我打算从一些基础的Java集合类开始看起，但在此之前先把它们的某些特性了解清楚，如：是否线程安全；内部的数据结构是怎样的。因为知其然，后知所以然，从顶层俯视底层，这样看代码会保有一种清晰的逻辑结构。在这里不会细说实现，只做概括。   主角们各自">
@@ -210,7 +210,7 @@
 <tr>
 <td style="text-align:center">LinkedList</td>
 <td style="text-align:center">不安全</td>
-<td style="text-align:center">双向循环链表</td>
+<td style="text-align:center">双向链表</td>
 <td style="text-align:center">修改、查找慢，插入、删除快</td>
 <td style="text-align:center">-</td>
 </tr>
@@ -258,6 +258,16 @@
         </div>
 
         <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-11-10T12:24:13.623Z" itemprop="dateUpdated">2018-11-10 20:24:13</time>
+</span><br>
+
+
+        
+    </div>
     
     <footer>
         <a href="http://yoursite.com">

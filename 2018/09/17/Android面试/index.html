@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Android面试 | Leeleg | 来自地球的开发者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="">
+    <meta name="description" content="ActivityActivity生命周期Activity的4种状态（running/paused/stopped/killed）Android进程优先级（前台/可见/服务/后台/空） Activity任务栈Activity启动模式standard（默认）singletop（栈顶复用）singletask（栈内复用）：s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android面试">
+<meta property="og:url" content="http://yoursite.com/2018/09/17/Android面试/index.html">
+<meta property="og:site_name" content="Leeleg">
+<meta property="og:description" content="ActivityActivity生命周期Activity的4种状态（running/paused/stopped/killed）Android进程优先级（前台/可见/服务/后台/空） Activity任务栈Activity启动模式standard（默认）singletop（栈顶复用）singletask（栈内复用）：singleinstance scheme跳转协议FragmentFragment">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/09/17/Android面试/启动时.png">
+<meta property="og:image" content="http://yoursite.com/2018/09/17/Android面试/暂停时.png">
+<meta property="og:image" content="http://yoursite.com/2018/09/17/Android面试/销毁时.png">
+<meta property="og:image" content="http://yoursite.com/2018/09/17/Android面试/重启时.png">
+<meta property="og:updated_time" content="2018-09-24T16:56:57.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android面试">
+<meta name="twitter:description" content="ActivityActivity生命周期Activity的4种状态（running/paused/stopped/killed）Android进程优先级（前台/可见/服务/后台/空） Activity任务栈Activity启动模式standard（默认）singletop（栈顶复用）singletask（栈内复用）：singleinstance scheme跳转协议FragmentFragment">
+<meta name="twitter:image" content="http://yoursite.com/2018/09/17/Android面试/启动时.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Leeleg" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand-1.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar-1.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Leeleg</h5>
+          <a href="mailto:lzq.leeleg@qq.com" title="lzq.leeleg@qq.com" class="mail">lzq.leeleg@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lee6256" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Android面试</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Android面试</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-17T15:51:10.000Z" itemprop="datePublished" class="page-time">
+  2018-09-17
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/面试/">面试</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Activity"><span class="post-toc-number">1.</span> <span class="post-toc-text">Activity</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activity生命周期"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Activity生命周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activity任务栈"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Activity任务栈</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Activity启动模式"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Activity启动模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#scheme跳转协议"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">scheme跳转协议</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Fragment"><span class="post-toc-number">2.</span> <span class="post-toc-text">Fragment</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Fragment与Activity的生命周期"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Fragment与Activity的生命周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#FragmentPagerAdapter与FragmentStatePagerAdapter区别"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">FragmentPagerAdapter与FragmentStatePagerAdapter区别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Fragment通信"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Fragment通信</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Fragment的replace、add、remove方法"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Fragment的replace、add、remove方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Service"><span class="post-toc-number">3.</span> <span class="post-toc-text">Service</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Service的启动方式"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Service的启动方式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#进程的优先级"><span class="post-toc-number">4.</span> <span class="post-toc-text">进程的优先级</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Android面试"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Android面试</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-17 23:51:10" datetime="2018-09-17T15:51:10.000Z"  itemprop="datePublished">2018-09-17</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/面试/">面试</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h2><h3 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h3><p>Activity的4种状态（running/paused/stopped/killed）<br>Android进程优先级（前台/可见/服务/后台/空）</p>
+<h3 id="Activity任务栈"><a href="#Activity任务栈" class="headerlink" title="Activity任务栈"></a>Activity任务栈</h3><h3 id="Activity启动模式"><a href="#Activity启动模式" class="headerlink" title="Activity启动模式"></a>Activity启动模式</h3><p>standard（默认）<br>singletop（栈顶复用）<br>singletask（栈内复用）：<br>singleinstance</p>
+<h3 id="scheme跳转协议"><a href="#scheme跳转协议" class="headerlink" title="scheme跳转协议"></a>scheme跳转协议</h3><h2 id="Fragment"><a href="#Fragment" class="headerlink" title="Fragment"></a>Fragment</h2><h3 id="Fragment与Activity的生命周期"><a href="#Fragment与Activity的生命周期" class="headerlink" title="Fragment与Activity的生命周期"></a>Fragment与Activity的生命周期</h3><p><img src="/2018/09/17/Android面试/启动时.png" alt=""><br><img src="/2018/09/17/Android面试/暂停时.png" alt=""><br><img src="/2018/09/17/Android面试/销毁时.png" alt=""><br><img src="/2018/09/17/Android面试/重启时.png" alt="">  </p>
+<h3 id="FragmentPagerAdapter与FragmentStatePagerAdapter区别"><a href="#FragmentPagerAdapter与FragmentStatePagerAdapter区别" class="headerlink" title="FragmentPagerAdapter与FragmentStatePagerAdapter区别"></a>FragmentPagerAdapter与FragmentStatePagerAdapter区别</h3><p>FragmentPagerAdapter切换页面时，只是把视图与Activity分离，因此内存并不会被回收。（适用于页面较少的情况）。相反，FragmentStatePagerAdapter切换页面时会直接移除，更节省内存。（适用于页面较多的情况）</p>
+<h3 id="Fragment通信"><a href="#Fragment通信" class="headerlink" title="Fragment通信"></a>Fragment通信</h3><ol>
+<li>Fragment调用Activity的方法getActivity</li>
+<li>Activity调用Fragment的方法接口回调</li>
+<li>Fragment调用Fragment的方法findFragmentById  </li>
+</ol>
+<h3 id="Fragment的replace、add、remove方法"><a href="#Fragment的replace、add、remove方法" class="headerlink" title="Fragment的replace、add、remove方法"></a>Fragment的replace、add、remove方法</h3><p><strong>Activity中调用replace()方法时的生命周期</strong><br>新替换的Fragment：onAttach &gt; onCreate &gt; onCreateView &gt; onViewCreated &gt; onActivityCreated &gt; onStart &gt; onResume<br>被替换的Fragment：onPause &gt; onStop &gt; onDestroyView &gt; onDestroy &gt; onDetach</p>
+<p><strong>Activity中调用replace()方法和addToBackStack()方法时的生命周期</strong><br>新替换的Fragment（没有在BackStack中）：onAttach &gt; onCreate &gt; onCreateView &gt; onViewCreated &gt; onActivityCreated &gt; onStart &gt; onResume<br>新替换的Fragment（已经在BackStack中）：onCreateView &gt; onViewCreated &gt; onActivityCreated &gt; onStart &gt; onResume<br>被替换的Fragment：onPause &gt; onStop &gt; onDestroyView</p>
+<p><strong>Activity中调用show()/hide()方法时的生命周期</strong><br>不会触发任何Fragment的生命周期，只是将该Fragment设置为是否可见。<br>这时此时方法onHiddenChanged派上用场了，当fragment隐藏时，该方法会调用传入参数为true表示该fragment被隐藏了，当fragment调用了show方法后，该方法传入的参数为false，表示该fragment正在显示。</p>
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><h3 id="Service的启动方式"><a href="#Service的启动方式" class="headerlink" title="Service的启动方式"></a>Service的启动方式</h3><h2 id="进程的优先级"><a href="#进程的优先级" class="headerlink" title="进程的优先级"></a>进程的优先级</h2><ol>
+<li><p><strong> 前台进程 </strong><br>只有在内存不足以支持它们同时继续运行这一万不得已的情况下，系统才会终止它们。用户当前操作所必需的进程。如果一个进程满足以下任一条件，即视为前台进程：  </p>
+<blockquote>
+<p>1、正在交互的Activity<br>2、一个绑定到正在交互的Activity的Service<br>3、已调用startForeground()的Service<br>4、正执行生命周期的Service（onCreate、onStart或onDestroy）<br>5、正执行onReceive的BroadcastReceiver</p>
+</blockquote>
+</li>
+<li><p><strong> 可见进程 </strong><br>除非为了维持所有前台进程同时运行而必须终止，否则系统不会终止可见进程。如果一个进程满足以下任一条件，即视为可见进程：  </p>
+<blockquote>
+<p>1、仍对用户可见的 Activity（已调用其 onPause() 方法）。例如，如果前台 Activity 启动了一个对话框，允许在其后显示上一 Activity<br>2、绑定到可见（或前台）Activity 的 Service</p>
+</blockquote>
+</li>
+<li><p><strong> 服务进程 </strong><br>除非内存不足以维持所有前台进程和可见进程同时运行，否则系统会让服务进程保持运行状态。</p>
+<blockquote>
+<p>正在运行已使用 startService() 方法启动的服务且不属于上述两个更高类别进程的进程（例如，在后台播放音乐或从网络下载数据）</p>
+</blockquote>
+</li>
+<li><p><strong> 后台进程 </strong><br>这些进程对用户体验没有直接影响，系统可能随时终止它们，以回收内存供前台进程、可见进程或服务进程使用。通常会有很多后台进程在运行，因此它们会保存在 LRU （最近最少使用）列表中，以确保包含用户最近查看的 Activity 的进程最后一个被终止。</p>
+<blockquote>
+<p>包含目前对用户不可见的 Activity 的进程（已调用 Activity 的 onStop() 方法）</p>
+</blockquote>
+</li>
+<li><p><strong> 空进程 </strong><br>保留这种进程的的唯一目的是用作缓存，以缩短下次在其中运行组件所需的启动时间。 为使总体系统资源在进程缓存和底层内核缓存之间保持平衡，系统往往会终止这些进程。</p>
+<blockquote>
+<p>不含任何活动应用组件的进程。</p>
+</blockquote>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-24T16:56:57.074Z" itemprop="dateUpdated">2018-09-25 00:56:57</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar-1.jpg" alt="Leeleg">
+            Leeleg
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/09/17/Android面试/&title=《Android面试》 — Leeleg&pic=http://yoursite.com/img/avatar-1.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/09/17/Android面试/&title=《Android面试》 — Leeleg&source=正努力着向高质量发展" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/09/17/Android面试/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android面试》 — Leeleg&url=http://yoursite.com/2018/09/17/Android面试/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/09/17/Android面试/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/10/07/Android面试-1/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Android面试(1)</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/02/ArrayList的实现原理/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">ArrayList的实现原理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <!-- <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Leeleg &copy; 2017 - 2018</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> 
+                Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer> -->
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2018/09/17/Android面试/&title=《Android面试》 — Leeleg&pic=http://yoursite.com/img/avatar-1.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2018/09/17/Android面试/&title=《Android面试》 — Leeleg&source=正努力着向高质量发展" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2018/09/17/Android面试/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Android面试》 — Leeleg&url=http://yoursite.com/2018/09/17/Android面试/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2018/09/17/Android面试/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACL0lEQVR42u3azXKDMAxFYd7/pelMtwnuuRLpBPl4xSQ0+GOhWj/Hgdf5u16vr769uufqztd1fGLJkCHjsQzyc2Tr/Fuyh5gqQ4aMDRg8yK43zSPhOhDzvcmQIUMGOfD1r9NgLUOGDBmdba1/7Uv/b8iQIeMhjM4Brl8Zu6EkJ0OGjNGMTmPg09f/1N+QIUPGFzPO0uLg9fHxriVDhozZDJJ88hBM2Ou/IsMZKOzKkCFjEIOMVvDHpIG41hJ483QZMmRswCAjEXxbazAPssFrkiFDxgaM2hGtE6w7qe+b+2XIkLEBg6SUNTb5/XSM47JqKEOGjKEMUnrjDyaYtEpWLBHKkCFjEKOYNOI3lCbD6Z0yZMjYgZFOWPW7h0Fq2mkzyJAhYxDjrhDJy239VsRlLi5DhowNGCTU1oIj59WKcTJkyNiBkdbk1u3Gzudp+0GGDBn7MMigQ3o/Cdw1pAwZMmSkIxQkRKYvgjcP4lxchgwZD2TwlJIPe3XGwmphXYYMGfsw0nEK3tqsjVlwtgwZMvZh8A3xgQzO4C8uzshlyJAxgsGDYFqSq42LdWAyZMiYxzjDlR4WSYJ686FQhgwZ4xh88UJ/OqKRNlB5kixDhoxJDF7Wv3fwKz3DBrm4DBkyhjJqhfv+wEQa9P8YtpAhQ4aMsKDPS2x81OzybCtDhgwZpUYm+Zzn2UFPQ4YMGUMZfEO1pkI8kJoeImXIkDGakTYG+puoFfV4Y1WGDBmDGD+8IfoIQl4U8wAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
